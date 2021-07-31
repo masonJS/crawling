@@ -8,7 +8,7 @@ const crawler = async () => {
     });
     const page = await browser.newPage();
 
-    await page.setUserAgent(process.env.CHROME_USER_AGENT)
+    // await page.setUserAgent(process.env.CHROME_USER_AGENT)
 
     page.on('dialog', async (dialog) => {
       // console.log(dialog.type(), dialog.message())
@@ -20,14 +20,16 @@ const crawler = async () => {
     await page.goto('https://unipass.customs.go.kr/csp/persIndex.do')
 
     await page.click('#newIssBtn');
+    await page.waitFor(3000)
+    await page.evaluate(() => {
+      document.querySelector('#clphType').click();
+      document.querySelector('#MYC1104002Q_fnm').value = '이민우';
+      document.querySelector('#MYC1104002Q_rrnoFrdg').value = process.env.FRONT_RESIDENT_REG_NUMBER;
+      document.querySelector('#MYC1104002Q_rrnoBcdg').value = process.env.BACK_RESIDENT_REG_NUMBER;
+      document.querySelector('#MYC1104002Q_search').click()
+    })
+    await page.waitFor(3000)
 
-    // await page.evaluate(() => {
-    //   document.querySelector('#clphType').click();
-    //   document.querySelector('#MYC1104002Q_fnm').value = '이민우';
-    //   document.querySelector('#MYC1104002Q_rrnoFrdg').value = 940526;
-    //   document.querySelector('#MYC1104002Q_rrnoBcdg').value = 1261811;
-    //   document.querySelector('#MYC1104002Q_search').click()
-    // })
 
     await page.close();
     await browser.close();
