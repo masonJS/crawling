@@ -1,7 +1,7 @@
 # Web Crawling
 
-1. crawling 이란?
-2. CSV, XLSX 파싱
+1. What is crawling?
+2. CSV, XLSX parsing
 3. axios, cheerio
 4. puppeteer 
 
